@@ -6,9 +6,17 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
+const priceRouteHandler = require('./solana/priceRouteHandler');
+
 // **** Block listener ****
 
-const ENV_VARS = ["RPC_URL", "MULTISIG_ADDRESS"];
+const ENV_VARS = [
+  "RPC_URL",
+  "RPC_URL_SOLANA",
+  "MULTISIG_ADDRESS",
+  "PYTH_BONK_PRICE_ORACLE_ACCOUNT_ADDRESS",
+  "PYTH_SOL_PRICE_ORACLE_ACCOUNT_ADDRESS",
+];
 for (let i = 0; i < ENV_VARS.length; i++) {
   const envVar = ENV_VARS[i];
   if (process.env[envVar] === undefined) {
@@ -87,6 +95,7 @@ app.options('*', cors());
 app.use(morgan("combined"));
 app.use(bodyParser.json());
 
+app.get("/price", priceRouteHandler);
 app.get(
   "/queue",
   asyncHandler(async (req, res) => {

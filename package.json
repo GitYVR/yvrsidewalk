@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@pythnetwork/client": "^2.19.0",
+    "@solana/web3.js-experimental": "npm:@solana/web3.js@tp2",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
