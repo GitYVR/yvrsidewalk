@@ -17,6 +17,7 @@ const ENV_VARS = [
   'MULTISIG_ADDRESS',
   'PYTH_BONK_PRICE_ORACLE_ACCOUNT_ADDRESS',
   'PYTH_SOL_PRICE_ORACLE_ACCOUNT_ADDRESS',
+  'SERVER_SECRET',
 ];
 for (let i = 0; i < ENV_VARS.length; i++) {
   const envVar = ENV_VARS[i];
