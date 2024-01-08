@@ -427,6 +427,11 @@
   resolved "https://registry.yarnpkg.com/@solana/codecs-core/-/codecs-core-2.0.0-experimental.24d71d6.tgz#6137ada0b8f3a384371362a26c70ae9a6fafb1ca"
   integrity sha512-wR4vrl+OQIBBkdwJRREJvHJoKmzWD9DEdjdEnb5praXbqQWB9iXcg1Qt4YNpDeVjq2wTaCA8Y+ZeXC4eUdKLjA==
 
+"@solana/codecs-core@2.0.0-experimental.5e8ac8d":
+  version "2.0.0-experimental.5e8ac8d"
+  resolved "https://registry.yarnpkg.com/@solana/codecs-core/-/codecs-core-2.0.0-experimental.5e8ac8d.tgz#281f8c998e2eefdf12f247b8cee1a3f44141858f"
+  integrity sha512-GrzBK2u957RsL42oh/04jMVpOj6hAnPpeF4gZT3/dL4zaYRnr6kDgW7bckiJm23ewzxUecIIbdb8/UPG6Nh18g==
+
 "@solana/codecs-data-structures@2.0.0-experimental.24d71d6":
   version "2.0.0-experimental.24d71d6"
   resolved "https://registry.yarnpkg.com/@solana/codecs-data-structures/-/codecs-data-structures-2.0.0-experimental.24d71d6.tgz#36766bee8053059e286042f65335feef6fa40baa"
@@ -442,6 +447,13 @@
   dependencies:
     "@solana/codecs-core" "2.0.0-experimental.24d71d6"
 
+"@solana/codecs-numbers@2.0.0-experimental.5e8ac8d":
+  version "2.0.0-experimental.5e8ac8d"
+  resolved "https://registry.yarnpkg.com/@solana/codecs-numbers/-/codecs-numbers-2.0.0-experimental.5e8ac8d.tgz#69d2a332cc0589a092ea4eeb5bad0d1963270211"
+  integrity sha512-48xUa3JxmkAhBSwN/fbwbAvusPkPqeGUrYt0lECB6OMHqIYmjevEUJgscP0Aq7rsjtGOPzxIgjsqrtlWs775/Q==
+  dependencies:
+    "@solana/codecs-core" "2.0.0-experimental.5e8ac8d"
+
 "@solana/codecs-strings@2.0.0-experimental.24d71d6":
   version "2.0.0-experimental.24d71d6"
   resolved "https://registry.yarnpkg.com/@solana/codecs-strings/-/codecs-strings-2.0.0-experimental.24d71d6.tgz#a7cd17fb7e2d7223be943896dada334e217f0952"
@@ -449,6 +461,14 @@
   dependencies:
     "@solana/codecs-core" "2.0.0-experimental.24d71d6"
     "@solana/codecs-numbers" "2.0.0-experimental.24d71d6"
+
+"@solana/codecs-strings@^2.0.0-experimental.5e8ac8d":
+  version "2.0.0-experimental.5e8ac8d"
+  resolved "https://registry.yarnpkg.com/@solana/codecs-strings/-/codecs-strings-2.0.0-experimental.5e8ac8d.tgz#65c36bf68fc241cbf2653c4734a477daa7501552"
+  integrity sha512-SKXj2hv+GEJpPJWktcEfzkSxwmpkqC5VIw/nxgggKAVFBGSvayHZazHG85RCGQbm0x/jo8IXlR/85YSyjenSXQ==
+  dependencies:
+    "@solana/codecs-core" "2.0.0-experimental.5e8ac8d"
+    "@solana/codecs-numbers" "2.0.0-experimental.5e8ac8d"
 
 "@solana/functional@2.0.0-experimental.24d71d6":
   version "2.0.0-experimental.24d71d6"
