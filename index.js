@@ -1,21 +1,22 @@
-require("dotenv").config();
-const cors = require('cors')
-const ethers = require("ethers");
-const asyncHandler = require("express-async-handler");
-const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
+require('dotenv').config();
+const cors = require('cors');
+const ethers = require('ethers');
+const asyncHandler = require('express-async-handler');
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 const priceRouteHandler = require('./solana/priceRouteHandler');
+const { queue } = require('./messageQueue');
 
 // **** Block listener ****
 
 const ENV_VARS = [
-  "RPC_URL",
-  "RPC_URL_SOLANA",
-  "MULTISIG_ADDRESS",
-  "PYTH_BONK_PRICE_ORACLE_ACCOUNT_ADDRESS",
-  "PYTH_SOL_PRICE_ORACLE_ACCOUNT_ADDRESS",
+  'RPC_URL',
+  'RPC_URL_SOLANA',
+  'MULTISIG_ADDRESS',
+  'PYTH_BONK_PRICE_ORACLE_ACCOUNT_ADDRESS',
+  'PYTH_SOL_PRICE_ORACLE_ACCOUNT_ADDRESS',
 ];
 for (let i = 0; i < ENV_VARS.length; i++) {
   const envVar = ENV_VARS[i];
@@ -33,45 +34,48 @@ const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
 let queue = [];
 
-setInterval(() => {
-  // Make sure queue is > 0
-  if (queue.length === 0) {
-    return;
-  }
+setInterval(
+  () => {
+    // Make sure queue is > 0
+    if (queue.length === 0) {
+      return;
+    }
 
-  // Shift
-  const curString = queue.shift();
+    // Shift
+    const curString = queue.shift();
 
-  // TODO:
-  console.log(`Changing text to ${curString}`);
-  fetch("http://192.168.1.51:3456/startshow", {
-    headers: {
-      accept: "*/*",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "x-requested-with": "XMLHttpRequest",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
-    },
-    body: `show=Banner&banner=${curString}&imgShow=orangeDot`,
-    method: "POST",
-  })
-    .then(() => {
-      console.log("successfully changed text");
+    // TODO:
+    console.log(`Changing text to ${curString}`);
+    fetch('http://192.168.1.51:3456/startshow', {
+      headers: {
+        accept: '*/*',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'x-requested-with': 'XMLHttpRequest',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+      },
+      body: `show=Banner&banner=${curString}&imgShow=orangeDot`,
+      method: 'POST',
     })
-    .catch(() => {
-      console.log("failed to change text");
-    });
-}, 1 * 60 * 1000);
+      .then(() => {
+        console.log('successfully changed text');
+      })
+      .catch(() => {
+        console.log('failed to change text');
+      });
+  },
+  1 * 60 * 1000,
+);
 
 const onBlock = async (b) => {
   const block = await provider.getBlockWithTransactions(b);
   const relevantTxs = block.transactions
-    .filter((x) => (x.to || "").toLowerCase() === MULTISIG_ADDRESS)
+    .filter((x) => (x.to || '').toLowerCase() === MULTISIG_ADDRESS)
     .filter((x) =>
-      (x.value || ethers.constants.Zero).gte(ethers.utils.parseUnits("1"))
+      (x.value || ethers.constants.Zero).gte(ethers.utils.parseUnits('1')),
     );
 
-  console.log(b, "Payment Txs", relevantTxs);
+  console.log(b, 'Payment Txs', relevantTxs);
 
   // Add to the queue
   relevantTxs.forEach((x) => {
@@ -81,7 +85,7 @@ const onBlock = async (b) => {
   });
 };
 
-provider.on("block", (b) => {
+provider.on('block', (b) => {
   onBlock(b);
 });
 
@@ -90,17 +94,17 @@ provider.on("block", (b) => {
 const app = express();
 const port = 4000;
 
-app.use(cors())
+app.use(cors());
 app.options('*', cors());
-app.use(morgan("combined"));
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 
-app.get("/price", priceRouteHandler);
+app.get('/price', priceRouteHandler);
 app.get(
-  "/queue",
+  '/queue',
   asyncHandler(async (req, res) => {
     res.json({ queue });
-  })
+  }),
 );
 
 app.listen(port, () => {
