@@ -10,6 +10,9 @@
     "express-async-handler": "^1.2.0",
     "morgan": "^1.10.0"
   },
+  "devDependencies": {
+    "prettier": "^3.1.1"
+  },
   "eslintConfig": {
     "env": {
       "node": true,
@@ -24,5 +27,9 @@
         "experimentalObjectRestSpread": true
       }
     }
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true
   }
 }
