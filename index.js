@@ -6,6 +6,10 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const {
+  solanaPayTransactionInfoRouteHandler,
+  solanaPayTransactionRouteHandler,
+} = require('./solana/getSolanaPayTransactionRouteHandler');
 const priceRouteHandler = require('./solana/priceRouteHandler');
 const { queue } = require('./messageQueue');
 
@@ -14,7 +18,10 @@ const { queue } = require('./messageQueue');
 const ENV_VARS = [
   'RPC_URL',
   'RPC_URL_SOLANA',
+  'MINT_ADDRESS_BONK_SOLANA',
+  'MINT_ADDRESS_USDC_SOLANA',
   'MULTISIG_ADDRESS',
+  'MULTISIG_ADDRESS_SOLANA',
   'PYTH_BONK_PRICE_ORACLE_ACCOUNT_ADDRESS',
   'PYTH_SOL_PRICE_ORACLE_ACCOUNT_ADDRESS',
   'SERVER_SECRET',
@@ -66,6 +73,10 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 app.get('/price', priceRouteHandler);
+app
+  .route('/s/:token/:message')
+  .get(solanaPayTransactionInfoRouteHandler)
+  .post(solanaPayTransactionRouteHandler);
 app.get(
   '/queue',
   asyncHandler(async (req, res) => {
